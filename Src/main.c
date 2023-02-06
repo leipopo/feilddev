@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "iwdg.h"
-#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -45,6 +44,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+uint8_t flg = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -55,16 +55,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-    if (huart->Instance == USART2) {
-        
-        HAL_IWDG_Refresh(&hiwdg);
-        HAL_TIM_Base_Start_IT(&htim4);
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_5, GPIO_PIN_SET);
-    }
-}
+
 /* USER CODE END 0 */
 
 /**
@@ -95,11 +86,14 @@ int main(void)
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
-    MX_TIM4_Init();
-    MX_USART2_UART_Init();
     MX_IWDG_Init();
+    MX_USART3_UART_Init();
     /* USER CODE BEGIN 2 */
-
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_5, GPIO_PIN_SET);
+    // HAL_UART_Transmit(&huart3, "t", 2, 100);
+    __HAL_UART_ENABLE_IT(&huart3, UART_IT_RXNE);
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -108,6 +102,13 @@ int main(void)
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
+        if (flg == 1) {
+            HAL_IWDG_Refresh(&hiwdg);
+            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
+            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+            HAL_GPIO_WritePin(GPIOE, GPIO_PIN_5, GPIO_PIN_RESET);
+            flg = 0;
+        }
     }
     /* USER CODE END 3 */
 }

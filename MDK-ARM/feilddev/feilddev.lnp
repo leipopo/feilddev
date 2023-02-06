@@ -1,0 +1,28 @@
+--cpu Cortex-M3
+"feilddev\startup_stm32f103xe.o"
+"feilddev\main.o"
+"feilddev\gpio.o"
+"feilddev\iwdg.o"
+"feilddev\usart.o"
+"feilddev\stm32f1xx_it.o"
+"feilddev\stm32f1xx_hal_msp.o"
+"feilddev\stm32f1xx_hal_gpio_ex.o"
+"feilddev\stm32f1xx_hal_iwdg.o"
+"feilddev\stm32f1xx_hal.o"
+"feilddev\stm32f1xx_hal_rcc.o"
+"feilddev\stm32f1xx_hal_rcc_ex.o"
+"feilddev\stm32f1xx_hal_gpio.o"
+"feilddev\stm32f1xx_hal_dma.o"
+"feilddev\stm32f1xx_hal_cortex.o"
+"feilddev\stm32f1xx_hal_pwr.o"
+"feilddev\stm32f1xx_hal_flash.o"
+"feilddev\stm32f1xx_hal_flash_ex.o"
+"feilddev\stm32f1xx_hal_exti.o"
+"feilddev\stm32f1xx_hal_tim.o"
+"feilddev\stm32f1xx_hal_tim_ex.o"
+"feilddev\stm32f1xx_hal_uart.o"
+"feilddev\system_stm32f1xx.o"
+--strict --scatter "feilddev\feilddev.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "feilddev.map" -o feilddev\feilddev.axf
