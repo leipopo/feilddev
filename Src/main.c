@@ -34,6 +34,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+#define bibiperiod 500
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -103,11 +105,14 @@ int main(void)
 
         /* USER CODE BEGIN 3 */
         if (flg == 1) {
-            HAL_IWDG_Refresh(&hiwdg);
+            
             HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
             HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
             HAL_GPIO_WritePin(GPIOE, GPIO_PIN_5, GPIO_PIN_RESET);
-            flg = 0;
+            HAL_Delay(bibiperiod/2);
+            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET);
+            HAL_Delay(bibiperiod/2);
+            
         }
     }
     /* USER CODE END 3 */
